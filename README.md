@@ -1,230 +1,221 @@
-# 💳 Fraud Detection Using Machine Learning
+# 🔐 Fraud Detection Using Machine Learning
 
-A machine learning project for detecting fraudulent financial transactions using **Python, Pandas, Scikit-learn, Logistic Regression, and Streamlit**.
+A machine learning project for detecting potentially fraudulent financial transactions using **Python, Pandas, Scikit-learn, Logistic Regression, and Streamlit**.
 
-The project includes data analysis, exploratory data analysis, feature engineering, model training, model evaluation, model saving, and an interactive Streamlit application for making fraud predictions.
+The project includes **exploratory data analysis, feature analysis, preprocessing, model training, evaluation, model serialization, and an interactive Streamlit application** for fraud prediction.
 
 ---
 
 ## 📌 Project Overview
 
-This project uses the **PaySim financial transaction dataset**, which is downloaded from Kaggle and is not included in this GitHub repository because the dataset file is larger than GitHub's recommended file-size limit.
+Financial fraud detection is a highly imbalanced classification problem because legitimate transactions significantly outnumber fraudulent transactions.
 
-The project analyzes financial transactions and trains a binary classification model to predict whether a transaction is:
+This project builds a **Logistic Regression baseline model** to classify financial transactions as:
 
-* `0` → Legitimate Transaction
-* `1` → Fraudulent Transaction
+* 🟢 `0` → Legitimate transaction
+* 🔴 `1` → Fraudulent transaction
 
-The trained model is saved as a `.pkl` file and used by the Streamlit application to make predictions from user-provided transaction details.
+The trained model is saved as a `.pkl` file and used by a Streamlit application for interactive predictions.
 
 ---
 
 ## 📊 Dataset
 
-The dataset used in this project is the **PaySim financial transaction dataset** from Kaggle.
+The project uses the **Fraud Detection Dataset** obtained from Kaggle.
 
-The dataset contains:
+🔗 **Dataset Source:** Fraud Detection Dataset — Kaggle
 
-* **6,362,620 transactions**
-* **11 original columns**
-* Legitimate and fraudulent transaction records
+The dataset is **not included in this GitHub repository** because of its large file size.
 
-### Dataset Source
+### 📋 Dataset Columns
 
-The dataset was downloaded from Kaggle:
+The original dataset contains the following columns:
 
-[PaySim Financial Dataset on Kaggle](https://www.kaggle.com/datasets/ealaxi/paysim1)
+```text
+step
+type
+amount
+nameOrig
+oldbalanceOrg
+newbalanceOrig
+nameDest
+oldbalanceDest
+newbalanceDest
+isFraud
+isFlaggedFraud
+```
 
-The dataset is not uploaded to this repository because the file is more than **400 MB**.
+### 🎯 Target Variable
 
-### How to Use the Dataset
-
-To reproduce the notebook:
-
-1. Download the dataset from Kaggle.
-2. Extract the downloaded file.
-3. Place the dataset file in the location expected by the notebook.
-4. Update the file path in `analysis_model.ipynb` if necessary.
-5. Run the notebook cells sequentially.
-
-The dataset is not required to run the Streamlit application if `fraud_detection_model.pkl` is already available.
-
-### Dataset Columns
-
-| Column           | Description                                                   |
-| ---------------- | ------------------------------------------------------------- |
-| `step`           | Represents a unit of time in the simulation                   |
-| `type`           | Type of transaction                                           |
-| `amount`         | Transaction amount                                            |
-| `nameOrig`       | Identifier of the transaction originator                      |
-| `oldbalanceOrg`  | Sender's balance before the transaction                       |
-| `newbalanceOrig` | Sender's balance after the transaction                        |
-| `nameDest`       | Identifier of the transaction recipient                       |
-| `oldbalanceDest` | Recipient's balance before the transaction                    |
-| `newbalanceDest` | Recipient's balance after the transaction                     |
-| `isFraud`        | Target variable indicating fraudulent transaction             |
-| `isFlaggedFraud` | Existing flag indicating a potentially suspicious transaction |
-
-### Target Variable
-
-The target variable used in the project is:
+The target column is:
 
 ```text
 isFraud
 ```
 
-where:
+| Value | Meaning                   |
+| ----: | ------------------------- |
+|   `0` | 🟢 Legitimate transaction |
+|   `1` | 🔴 Fraudulent transaction |
 
-```text
-0 = Legitimate
-1 = Fraudulent
-```
+### 📈 Class Distribution
 
 The dataset contains:
 
-* **6,362,620 total transactions**
-* **6,354,407 legitimate transactions**
-* **8,213 fraudulent transactions**
+|               Class | Number of Transactions |
+| ------------------: | ---------------------: |
+| 🟢 Legitimate (`0`) |              6,354,407 |
+| 🔴 Fraudulent (`1`) |                  8,213 |
 
-This shows that the dataset is highly imbalanced.
+This demonstrates the **strong class imbalance** present in the dataset.
 
 ---
 
-## 🧠 Project Workflow
+## 📁 Repository Structure
 
 ```text
-Kaggle Dataset
-        ↓
-Data Loading
-        ↓
-Data Inspection
-        ↓
-Exploratory Data Analysis
-        ↓
-Fraud Distribution Analysis
-        ↓
-Feature Engineering
-        ↓
-Feature Selection
-        ↓
-Train-Test Split
-        ↓
-Numerical Scaling
-        ↓
-Categorical Encoding
-        ↓
-Logistic Regression Training
-        ↓
-Model Evaluation
-        ↓
-Model Saving
-        ↓
-Streamlit Prediction Application
+fraud-detection-using-ml/
+│
+├── 📂 Images/
+│   ├── Screenshot 2026-09-07 213315.png
+│   └── Screenshot 2026-09-07 213401.png
+│
+├── 📄 .gitignore
+├── 📓 analysis_model.ipynb
+├── 🐍 fraud_detection.py
+├── 🤖 fraud_detection_model.pkl
+└── 📖 README.md
 ```
 
 ---
 
-## 🔍 Exploratory Data Analysis
+# 🔄 Project Workflow
 
-The notebook includes analysis of:
-
-* Dataset shape
-* Column names
-* Data types
-* Sample records
-* Descriptive statistics
-* Missing values
-* Fraud and legitimate transaction counts
-* Transaction types
-* Transaction amounts
-* Sender account balances
-* Receiver account balances
-
-The notebook also examines the distribution of fraudulent and legitimate transactions.
-
----
-
-## 📈 Fraud Distribution
-
-The target distribution is highly imbalanced:
-
-| Transaction Class |         Count |
-| ----------------- | ------------: |
-| Legitimate        |     6,354,407 |
-| Fraudulent        |         8,213 |
-| **Total**         | **6,362,620** |
-
-Because fraudulent transactions are much less frequent than legitimate transactions, accuracy alone is not sufficient for evaluating the model.
+```text
+📊 Dataset
+    ↓
+📥 Data Loading
+    ↓
+🔍 Data Inspection
+    ↓
+📊 Exploratory Data Analysis
+    ↓
+⚙️ Feature Engineering
+    ↓
+🎯 Feature Selection
+    ↓
+✂️ Train/Test Split
+    ↓
+🔧 Data Preprocessing
+    ↓
+🤖 Logistic Regression
+    ↓
+📈 Model Evaluation
+    ↓
+💾 Save Trained Model
+    ↓
+🌐 Streamlit Application
+    ↓
+🔮 Fraud Prediction
+```
 
 ---
 
-## 🔎 Transaction Type Analysis
+# 1️⃣ Data Loading and Inspection
 
-The notebook analyzes transaction types and their relationship with fraud.
+The dataset is loaded using **Pandas**.
 
-The transaction types included in the dataset are:
+The notebook expects the dataset to be available locally with the filename:
 
-* `PAYMENT`
-* `TRANSFER`
-* `CASH_OUT`
-* `CASH_IN`
+```text
+AIML Dataset.csv
+```
 
-The analysis examines whether fraud occurs more frequently in particular transaction categories.
+If your downloaded dataset has a different filename, either rename it to:
+
+```text
+AIML Dataset.csv
+```
+
+or update the file path in `analysis_model.ipynb`.
+
+### 📊 Dataset Information
+
+The dataset contains:
+
+* 📌 6,362,620 rows
+* 📌 11 original columns
+* 🔢 Numerical and categorical features
+* ✅ No missing values detected during the notebook's missing-value check
 
 ---
 
-## 🛠️ Feature Engineering
+# 2️⃣ Exploratory Data Analysis
 
-The notebook creates two additional features based on account-balance changes.
+The notebook performs exploratory analysis to understand:
 
-### 1. Original Account Balance Difference
+* 🔍 Dataset structure
+* 🔢 Data types
+* 📊 Class distribution
+* ❌ Missing values
+* 💳 Transaction types
+* 🚨 Fraud distribution
+* 💰 Account balance behavior
+* 📈 Relationship between transaction characteristics and fraud
+
+Fraud rates are also analyzed by transaction type.
+
+---
+
+# 3️⃣ Feature Engineering
+
+Two balance-difference columns are created during the analysis:
 
 ```python
-df['balancedDiffOrginal'] = (
-    df['oldbalanceOrg'] - df['newbalanceOrig']
+df['balancedDiffOrginal'] = df['oldbalanceOrg'] - df['newbalanceOrig']
+
+df['balancedDiffDest'] = df['oldbalanceDest'] - df['newbalanceDest']
+```
+
+These features are useful for analyzing changes in account balances.
+
+### ⚠️ Important
+
+The engineered columns:
+
+```text
+balancedDiffOrginal
+balancedDiffDest
+```
+
+are **created during the notebook's analysis but are NOT included in the final machine learning model feature list**.
+
+Therefore, these columns should not be considered final model inputs in the current implementation.
+
+---
+
+# 4️⃣ Feature Selection
+
+The following identifier and flag columns are removed from the modeling dataset:
+
+```python
+df_model = df.drop(
+    columns=['nameOrig', 'nameDest', 'isFlaggedFraud'],
+    axis=1
 )
 ```
 
-This represents the difference between the sender's balance before and after the transaction.
+The final preprocessing pipeline explicitly selects the features used by the model.
 
-### 2. Destination Account Balance Difference
+### 🎯 Final Model Features
 
-```python
-df['balancedDiffDest'] = (
-    df['oldbalanceDest'] - df['newbalanceDest']
-)
-```
-
-This represents the difference between the recipient's balance before and after the transaction.
-
-These features are created to provide additional information about balance changes during a transaction.
-
----
-
-## 🧹 Feature Selection
-
-The following columns are removed before model training:
-
-```text
-nameOrig
-nameDest
-isFlaggedFraud
-```
-
-### Reason for Removing These Columns
-
-* `nameOrig` and `nameDest` are transaction account identifiers.
-* `isFlaggedFraud` is an existing flag in the dataset and is not used as a model input in this project.
-
-The model uses the following features:
-
-### Categorical Feature
+#### 🔤 Categorical Feature
 
 ```text
 type
 ```
 
-### Numerical Features
+#### 🔢 Numerical Features
 
 ```text
 amount
@@ -234,13 +225,26 @@ oldbalanceDest
 newbalanceDest
 ```
 
-The engineered balance-difference columns are also created during the notebook workflow.
+### 🚫 Features Not Used by the Final Model
+
+The following are not final model inputs:
+
+```text
+step
+nameOrig
+nameDest
+isFlaggedFraud
+balancedDiffOrginal
+balancedDiffDest
+```
+
+`step` remains in the intermediate dataframe but is excluded from the final preprocessing because the pipeline uses only the explicitly specified numerical and categorical feature lists.
 
 ---
 
-## 🧪 Train-Test Split
+# 5️⃣ Train/Test Split
 
-The data is divided into training and testing sets using:
+The dataset is divided into training and testing sets using:
 
 ```python
 train_test_split(
@@ -251,42 +255,46 @@ train_test_split(
 )
 ```
 
-The split contains:
+This results in:
 
-* **70% training data**
-* **30% testing data**
+* 🏋️ **70% Training Data**
+* 🧪 **30% Testing Data**
 
-Stratification is used to preserve the distribution of legitimate and fraudulent transactions in both datasets.
+Stratification is used so that the class distribution is preserved between the training and testing datasets.
 
 ---
 
-## ⚙️ Data Preprocessing
+# 6️⃣ Data Preprocessing
 
-The project uses a Scikit-learn `ColumnTransformer`.
+The project uses Scikit-learn's `ColumnTransformer` and `Pipeline`.
 
-### Numerical Features
+### 🔢 Numerical Features
 
-Numerical features are scaled using:
+Numerical features are standardized using:
 
-```python
-StandardScaler()
+```text
+StandardScaler
 ```
 
-### Categorical Features
+### 🔤 Categorical Feature
 
 The `type` column is encoded using:
 
-```python
+```text
 OneHotEncoder(drop='first')
 ```
 
-This converts the transaction type into numerical values that can be used by the Logistic Regression model.
+This converts the categorical transaction type into numerical features suitable for Logistic Regression.
 
 ---
 
-## 🤖 Machine Learning Model
+# 7️⃣ Machine Learning Model
 
-The project uses **Logistic Regression** as the classification algorithm.
+The project uses:
+
+## 🤖 Logistic Regression
+
+The classifier is configured as:
 
 ```python
 LogisticRegression(
@@ -295,167 +303,179 @@ LogisticRegression(
 )
 ```
 
-The model is configured with:
+### ⚖️ Handling Class Imbalance
 
-```python
+Because fraudulent transactions are much less frequent than legitimate transactions, the model uses:
+
+```text
 class_weight='balanced'
 ```
 
-This gives additional weight to the minority fraud class during training.
+This gives greater importance to the minority fraud class during training.
 
-Logistic Regression is used in this project as a baseline binary classification model.
+### 🚫 No Resampling
 
----
+The current implementation does **not** use:
 
-## ⚖️ Class Imbalance Handling
+* ❌ SMOTE
+* ❌ Random Oversampling
+* ❌ Random Undersampling
 
-The dataset contains significantly more legitimate transactions than fraudulent transactions.
+Class imbalance is handled through Logistic Regression's:
 
-To account for this imbalance, the model uses:
-
-```python
+```text
 class_weight='balanced'
 ```
 
-This helps the model give more importance to fraudulent transactions during training.
-
-No SMOTE, undersampling, or oversampling method is used in the current project.
+parameter.
 
 ---
 
-## 🔗 Machine Learning Pipeline
+# 8️⃣ Machine Learning Pipeline
 
-The preprocessing steps and classifier are combined into a Scikit-learn pipeline:
+The preprocessing and model are combined into a single Scikit-learn pipeline:
 
-```python
-Pipeline([
-    ('preprocessor', preprocessor),
-    (
-        'classifier',
-        LogisticRegression(
-            class_weight='balanced',
-            max_iter=1000
-        )
-    )
-])
+```text
+📥 Input Data
+      ↓
+🔧 ColumnTransformer
+      ├── StandardScaler → Numerical Features
+      └── OneHotEncoder → Transaction Type
+      ↓
+🤖 Logistic Regression
+      ↓
+🔮 Prediction
 ```
 
-The pipeline is used for training, evaluation, and saving the complete model workflow.
+This pipeline is trained on the training dataset.
 
 ---
 
-## 📊 Model Evaluation
+# 9️⃣ Model Evaluation
 
-The notebook evaluates the model using:
+The trained model is evaluated using the test dataset.
 
-* Accuracy
-* Precision
-* Recall
-* F1-score
-* Confusion Matrix
-* Classification Report
+The project evaluates:
 
-Because the dataset is highly imbalanced, the fraud-class precision and recall are more informative than accuracy alone.
+* 🎯 Precision
+* 🔎 Recall
+* 📊 F1-score
+* ✅ Accuracy
+* 📉 Confusion Matrix
+* 📋 Classification Report
 
----
+## 📊 Classification Results
 
-## 📈 Model Performance
+|             Class | Precision | Recall | F1-Score |
+| ----------------: | --------: | -----: | -------: |
+| 🟢 0 — Legitimate |      1.00 |   0.94 |     0.97 |
+| 🔴 1 — Fraudulent |      0.02 |   0.94 |     0.04 |
 
-The notebook reports the following results:
-
-| Metric    | Legitimate (0) | Fraud (1) |
-| --------- | -------------: | --------: |
-| Precision |           1.00 |      0.02 |
-| Recall    |           0.94 |      0.94 |
-| F1-Score  |           0.97 |      0.04 |
-
-### Overall Accuracy
+### ✅ Overall Accuracy
 
 ```text
 94.41%
 ```
 
-The model reports approximately **94.41% accuracy** on the test data.
+The recorded test accuracy is approximately:
 
-### Interpretation
+```text
+94.4081%
+```
 
-The model identifies a large proportion of fraudulent transactions, with approximately **94% recall for the fraud class**.
+### 🚨 Fraud Recall
 
-However, the fraud precision is approximately **2%**, which means that many transactions predicted as fraudulent are actually legitimate.
+The model achieved approximately:
 
-Therefore, the current model should be considered a project or baseline model rather than a production-ready fraud detection system.
+```text
+94%
+```
+
+recall for the fraudulent class.
+
+This means the model detected a large proportion of fraudulent transactions in the test set.
+
+However, fraud precision is only:
+
+```text
+2%
+```
+
+which means many transactions predicted as fraudulent were actually legitimate.
+
+Therefore, the model should be considered a **baseline fraud detection model**, not a production-ready fraud detection system.
 
 ---
 
-## 🧮 Confusion Matrix
+# 🔟 Confusion Matrix
 
-The notebook records the following confusion matrix:
+The confusion matrix obtained from the test set is:
 
 ```text
 [[1799722  106600]
  [    137    2327]]
 ```
 
-Interpreted as:
+### 📋 Interpretation
 
-|                       | Predicted Legitimate | Predicted Fraud |
-| --------------------- | -------------------: | --------------: |
-| **Actual Legitimate** |            1,799,722 |         106,600 |
-| **Actual Fraud**      |                  137 |           2,327 |
+|                   | Predicted Legitimate | Predicted Fraud |
+| ----------------- | -------------------: | --------------: |
+| Actual Legitimate |            1,799,722 |         106,600 |
+| Actual Fraud      |                  137 |           2,327 |
 
-The confusion matrix shows that the model detects many fraudulent transactions but also produces a considerable number of false-positive predictions.
+The model correctly identifies many fraudulent transactions, but it also produces a substantial number of **false-positive fraud predictions**.
 
 ---
 
-## 💾 Model Saving
+# 1️⃣1️⃣ Model Saving
 
-The trained pipeline is saved using Joblib:
+After training, the complete Scikit-learn pipeline is saved using Joblib:
 
 ```python
-import joblib
-
 joblib.dump(
     pipeline,
     'fraud_detection_model.pkl'
 )
 ```
 
-The saved file contains the preprocessing steps and the trained Logistic Regression model.
+The saved model file is:
 
-The dataset is not required to use the saved model in the Streamlit application.
+```text
+fraud_detection_model.pkl
+```
+
+Because the preprocessing and Logistic Regression classifier are stored together in the pipeline, the Streamlit application can load the saved model and directly perform predictions on appropriately formatted input data.
 
 ---
 
-## 🖥️ Streamlit Application
+# 1️⃣2️⃣ Streamlit Application
 
-The project includes a Streamlit application in:
+The project includes an interactive **Streamlit application**:
 
 ```text
 fraud_detection.py
 ```
 
-The application loads the saved model:
+The application loads:
 
-```python
-model = joblib.load(
-    'fraud_detection_model.pkl'
-)
+```text
+fraud_detection_model.pkl
 ```
 
-Users can enter transaction information through the application.
+and provides an interface for entering transaction information.
 
-### Input Fields
+### 📝 Input Fields
 
 The application accepts:
 
-* Transaction Type
-* Transaction Amount
-* Sender's Old Balance
-* Sender's New Balance
-* Receiver's Old Balance
-* Receiver's New Balance
+* 💳 Transaction Type
+* 💰 Amount
+* 🏦 Old Balance of Sender
+* 🏦 New Balance of Sender
+* 🏦 Old Balance of Receiver
+* 🏦 New Balance of Receiver
 
-The available transaction types are:
+### 🔤 Supported Transaction Types
 
 ```text
 CASH_OUT
@@ -464,392 +484,289 @@ CASH_IN
 TRANSFER
 ```
 
-After the user clicks **Predict**, the application displays the model prediction.
-
-### Prediction Values
+After entering the transaction information, click:
 
 ```text
-0 → LEGITIMATE
-1 → FRAUDULENT
+Predict
 ```
 
-The prediction is generated by the saved machine learning pipeline.
+The application displays the prediction.
 
----
-
-## 📁 Project Structure
+### 🔮 Prediction
 
 ```text
-fraud-detection-using-ml/
-│
-├── Images/
-│   ├── Screenshot 2026-09-07 213315.png
-│   └── Screenshot 2026-09-07 213401.png
-│
-├── .gitignore
-│
-├── analysis_model.ipynb
-│   └── Data analysis, EDA, feature engineering,
-│       preprocessing, model training and evaluation
-│
-├── fraud_detection.py
-│   └── Streamlit prediction application
-│
-├── fraud_detection_model.pkl
-│   └── Saved Scikit-learn model pipeline
-│
-└── README.md
-    └── Project documentation
-```
-
-The Kaggle dataset is intentionally not included in the repository because it is larger than 400 MB.
-
----
-
-## 🧰 Technologies Used
-
-### Programming Language
-
-* Python
-
-### Data Analysis
-
-* Pandas
-* NumPy
-
-### Data Visualization
-
-* Matplotlib
-* Seaborn
-
-### Machine Learning
-
-* Scikit-learn
-* Logistic Regression
-* StandardScaler
-* OneHotEncoder
-* ColumnTransformer
-* Pipeline
-
-### Model Saving
-
-* Joblib
-
-### Application
-
-* Streamlit
-
-### Development Tools
-
-* Jupyter Notebook
-* VS Code
-
----
-
-## 📦 Installation
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/Rajeshkumar0707/fraud-detection-using-ml.git
-```
-
-### 2. Navigate to the Project Directory
-
-```bash
-cd fraud-detection-using-ml
-```
-
-### 3. Create a Virtual Environment
-
-```bash
-python -m venv venv
-```
-
-### 4. Activate the Virtual Environment
-
-#### Windows
-
-```bash
-venv\Scripts\activate
-```
-
-#### macOS / Linux
-
-```bash
-source venv/bin/activate
-```
-
-### 5. Install the Required Libraries
-
-```bash
-pip install pandas numpy matplotlib seaborn scikit-learn streamlit joblib jupyter
+0 → 🟢 LEGITIMATE
+1 → 🔴 FRAUDULENT
 ```
 
 ---
 
-## 📥 Download the Dataset
+# 1️⃣3️⃣ Example Application Flow
 
-The dataset must be downloaded separately from Kaggle.
+```text
+🌐 Open Streamlit App
+        ↓
+💳 Select Transaction Type
+        ↓
+💰 Enter Transaction Amount
+        ↓
+🏦 Enter Sender Balance Details
+        ↓
+🏦 Enter Receiver Balance Details
+        ↓
+🖱️ Click "Predict"
+        ↓
+🤖 Model Prediction
+        ↓
+🟢 LEGITIMATE / 🔴 FRAUDULENT
+```
 
-1. Open the [PaySim dataset page on Kaggle](https://www.kaggle.com/datasets/ealaxi/paysim1).
-2. Download the dataset.
-3. Extract the downloaded file.
-4. Place it in the project directory or update the path used in the notebook.
-5. Open `analysis_model.ipynb`.
-6. Run the notebook cells.
-
-The dataset is not stored in this repository because the file is larger than 400 MB.
+The exact prediction depends on the transaction values entered by the user.
 
 ---
 
-## ▶️ Run the Jupyter Notebook
+# 1️⃣4️⃣ Technologies Used
 
-Open:
+| Technology             | Purpose                             |
+| ---------------------- | ----------------------------------- |
+| 🐍 Python              | Programming language                |
+| 🐼 Pandas              | Data loading and manipulation       |
+| 🔢 NumPy               | Numerical operations                |
+| 📊 Matplotlib          | Data visualization                  |
+| 📈 Seaborn             | Exploratory data visualization      |
+| 🤖 Scikit-learn        | Machine learning and preprocessing  |
+| 📐 Logistic Regression | Classification model                |
+| 📏 StandardScaler      | Numerical feature scaling           |
+| 🔤 OneHotEncoder       | Categorical feature encoding        |
+| 🔧 ColumnTransformer   | Feature preprocessing               |
+| 🔄 Pipeline            | Combining preprocessing and model   |
+| 💾 Joblib              | Saving/loading trained model        |
+| 🌐 Streamlit           | Interactive web application         |
+| 📓 Jupyter Notebook    | Data analysis and model development |
+| 🐙 Git/GitHub          | Version control and project hosting |
+
+---
+
+# 1️⃣5️⃣ Installation
+
+Clone the repository and navigate to the project directory.
+
+Install the required Python packages:
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn joblib streamlit jupyter
+```
+
+---
+
+# 1️⃣6️⃣ Running the Analysis
+
+Open the notebook:
 
 ```text
 analysis_model.ipynb
 ```
 
-Run the notebook cells to reproduce the project workflow:
+Make sure the dataset is available locally as:
 
 ```text
-Data Loading
-    ↓
-Data Inspection
-    ↓
-Exploratory Data Analysis
-    ↓
-Fraud Distribution Analysis
-    ↓
-Feature Engineering
-    ↓
-Feature Selection
-    ↓
-Preprocessing
-    ↓
-Train-Test Split
-    ↓
-Model Training
-    ↓
-Model Evaluation
-    ↓
-Model Saving
+AIML Dataset.csv
+```
+
+Then run the notebook cells sequentially.
+
+The notebook performs:
+
+```text
+📥 Data Loading
+   ↓
+📊 EDA
+   ↓
+⚙️ Feature Engineering
+   ↓
+🎯 Feature Selection
+   ↓
+✂️ Train/Test Split
+   ↓
+🔧 Preprocessing
+   ↓
+🤖 Model Training
+   ↓
+📈 Evaluation
+   ↓
+💾 Model Saving
 ```
 
 ---
 
-## 🚀 Run the Streamlit Application
+# 1️⃣7️⃣ Running the Streamlit Application
 
-The Streamlit application requires:
+Make sure the following files are in the same directory:
 
 ```text
 fraud_detection.py
 fraud_detection_model.pkl
 ```
 
-Run the application with:
+Run:
 
 ```bash
 streamlit run fraud_detection.py
 ```
 
-The application can normally be opened at:
+The Streamlit application will open in your browser.
+
+Default local address:
 
 ```text
 http://localhost:8501
 ```
 
-The original dataset is not required to run the application after the model file has been created.
-
 ---
 
-## 🔮 Example Prediction Workflow
+# 1️⃣8️⃣ ⚠️ Project Limitations
 
-### Example Input
+Although the model achieves approximately **94.41% accuracy** and approximately **94% fraud recall**, accuracy alone is not sufficient for evaluating a fraud detection system because the dataset is highly imbalanced.
+
+The most important limitation is the low fraud precision:
 
 ```text
-Transaction Type: TRANSFER
-Amount: 100000
-Sender Old Balance: 100000
-Sender New Balance: 0
-Receiver Old Balance: 0
-Receiver New Balance: 0
+Fraud Precision = 0.02
 ```
 
-The application sends the entered values to the saved model pipeline.
+This indicates that the model generates many false-positive fraud predictions.
 
-### Example Output
+Therefore:
+
+> ⚠️ This project is a machine learning baseline demonstrating fraud classification, preprocessing, imbalanced classification handling, model evaluation, model serialization, and deployment through Streamlit. It should not be treated as a production fraud detection solution.
+
+---
+
+# 1️⃣9️⃣ 🚀 Future Improvements
+
+Possible improvements include:
+
+* 🌳 Experimenting with Random Forest
+* 📈 Testing Gradient Boosting models
+* ⚡ Testing XGBoost or other advanced classifiers
+* 🎯 Hyperparameter tuning
+* 🔀 Threshold optimization
+* 📊 Precision-Recall analysis
+* 📉 ROC-AUC and PR-AUC evaluation
+* ⚙️ Advanced feature engineering
+* 🎯 Feature selection optimization
+* 🔄 Comparing different class-imbalance strategies
+* 🔁 Cross-validation
+* 🔍 Model explainability
+* 🚨 Improving false-positive performance
+* ☁️ Deploying the application to a cloud platform
+* 🔌 Adding API-based prediction
+* 📡 Adding model monitoring and performance tracking
+
+> 💡 These are future improvements and are **not part of the current implementation**.
+
+---
+
+# 2️⃣0️⃣ 💼 Skills Demonstrated
+
+This project demonstrates practical experience with:
+
+* 🐍 Python
+* 🐼 Pandas
+* 🔢 NumPy
+* 🔍 Exploratory Data Analysis
+* 📊 Data Visualization
+* ⚙️ Feature Engineering
+* 🎯 Feature Selection
+* 🤖 Classification
+* 📐 Logistic Regression
+* ⚖️ Imbalanced Classification
+* 🧠 Scikit-learn
+* 🔧 Data Preprocessing
+* 📏 Standardization
+* 🔤 One-Hot Encoding
+* ✂️ Train/Test Splitting
+* 📈 Model Evaluation
+* 📉 Confusion Matrix
+* 🎯 Precision, Recall and F1-score
+* 🔄 Machine Learning Pipelines
+* 💾 Joblib Model Serialization
+* 🌐 Streamlit Application Development
+* 🐙 Git/GitHub
+
+---
+
+# 2️⃣1️⃣ 📂 Project Files
+
+### 📓 `analysis_model.ipynb`
+
+Jupyter Notebook containing:
+
+* 📥 Dataset loading
+* 🔍 Data inspection
+* 📊 Exploratory data analysis
+* ⚙️ Feature engineering
+* 🎯 Feature selection
+* 🔧 Model preprocessing
+* 🤖 Logistic Regression training
+* 📈 Model evaluation
+* 💾 Model saving
+
+### 🐍 `fraud_detection.py`
+
+Streamlit application used to:
+
+* 📝 Accept transaction details
+* 💾 Load the trained model
+* 🔮 Generate fraud predictions
+* 📊 Display prediction results
+
+### 🤖 `fraud_detection_model.pkl`
+
+Serialized Scikit-learn pipeline containing:
+
+* 🔧 Feature preprocessing
+* 📏 StandardScaler
+* 🔤 OneHotEncoder
+* 🤖 Trained Logistic Regression model
+
+### 🖼️ `Images/`
+
+Contains screenshots demonstrating the project/application.
+
+---
+
+# 2️⃣2️⃣ 🎯 Conclusion
+
+This project demonstrates an end-to-end machine learning workflow for financial fraud classification.
+
+The implementation covers:
 
 ```text
-Prediction Result: '1'
+📊 Dataset
+   ↓
+🔍 Exploratory Data Analysis
+   ↓
+⚙️ Feature Engineering
+   ↓
+🎯 Feature Selection
+   ↓
+🔧 Preprocessing
+   ↓
+🤖 Logistic Regression
+   ↓
+📈 Model Evaluation
+   ↓
+💾 Model Serialization
+   ↓
+🌐 Streamlit Deployment
 ```
 
-The application may display:
+The current Logistic Regression model achieves approximately **94.41% test accuracy** and **94% recall for fraudulent transactions**.
 
-```text
-The transaction is predicted to be FRAUDULENT.
-```
+At the same time, the **2% fraud precision** demonstrates the difficulty of detecting fraud in a highly imbalanced dataset and highlights the need for further model and threshold optimization.
 
-The prediction depends on the values entered and the trained model.
-
----
-
-## 📌 Project Observations
-
-### 1. The dataset is highly imbalanced
-
-There are far more legitimate transactions than fraudulent transactions.
-
-### 2. Accuracy does not fully describe the model
-
-The reported accuracy is high, but the fraud precision is low.
-
-### 3. Class weighting is used
-
-The model uses `class_weight='balanced'` to give more importance to the fraud class.
-
-### 4. Balance differences are engineered
-
-The notebook creates additional features based on changes in sender and receiver balances.
-
-### 5. The project uses Logistic Regression
-
-No advanced ensemble model is included in the current implementation.
-
----
-
-## ⚠️ Current Limitations
-
-The current project has the following limitations:
-
-* The Kaggle dataset is not included in the repository because it is larger than 400 MB.
-* The dataset must be downloaded separately to reproduce the notebook.
-* The model uses Logistic Regression as a baseline classifier.
-* Fraud precision is low.
-* The model produces a relatively high number of false positives.
-* Probability-threshold tuning is not included.
-* Hyperparameter tuning is not included.
-* Cross-validation is not included.
-* SMOTE or other resampling methods are not included.
-* Advanced ensemble model comparison is not included.
-* ROC-AUC and PR-AUC analysis are not included in the current workflow.
-* The project does not include a production API.
-* The project does not include database integration.
-* The project does not include model monitoring or automated retraining.
-
----
-
-## 🚀 Possible Future Improvements
-
-The following improvements could be explored in future versions:
-
-* Test Random Forest, XGBoost, LightGBM, or other classifiers.
-* Apply SMOTE or other imbalance-handling techniques.
-* Tune the classification probability threshold.
-* Perform hyperparameter tuning.
-* Add cross-validation.
-* Add ROC-AUC and PR-AUC evaluation.
-* Add precision-recall curve visualization.
-* Add model explainability using SHAP.
-* Create an API using FastAPI or Flask.
-* Add model monitoring and data-drift detection.
-* Deploy the application to a cloud platform.
-
-These are possible future improvements and are not part of the current implementation.
-
----
-
-## 📸 Application Screenshots
-
-Screenshots of the project/application are available in:
-
-```text
-Images/
-```
-
----
-
-## 📚 Project Files
-
-### `analysis_model.ipynb`
-
-Contains the notebook workflow for:
-
-* Loading the Kaggle dataset
-* Inspecting the data
-* Performing exploratory data analysis
-* Analyzing fraud distribution
-* Analyzing transaction types
-* Creating balance-difference features
-* Selecting model features
-* Splitting the data
-* Preprocessing numerical and categorical features
-* Training Logistic Regression
-* Evaluating the model
-* Saving the trained pipeline
-
-### `fraud_detection.py`
-
-Contains the Streamlit application used to enter transaction details and display a prediction.
-
-### `fraud_detection_model.pkl`
-
-Contains the saved Scikit-learn preprocessing and Logistic Regression pipeline.
-
-### `Images/`
-
-Contains screenshots related to the project/application.
-
-### `.gitignore`
-
-Contains files and directories excluded from Git tracking.
-
----
-
-## 🎓 Skills Demonstrated
-
-* Python
-* Pandas
-* NumPy
-* Data Inspection
-* Exploratory Data Analysis
-* Data Visualization
-* Feature Engineering
-* Feature Selection
-* Numerical Scaling
-* Categorical Encoding
-* Imbalanced Classification
-* Logistic Regression
-* Scikit-learn Pipelines
-* Model Evaluation
-* Confusion Matrix
-* Classification Report
-* Joblib
-* Streamlit
-* Jupyter Notebook
-
----
-
-## 🏆 Project Highlights
-
-```text
-✔ Uses the PaySim dataset downloaded from Kaggle
-✔ Dataset is excluded because it is larger than 400 MB
-✔ Includes exploratory data analysis
-✔ Includes fraud distribution analysis
-✔ Includes transaction-type analysis
-✔ Creates balance-difference features
-✔ Uses class-weighted Logistic Regression
-✔ Uses StandardScaler
-✔ Uses OneHotEncoder
-✔ Uses a Scikit-learn Pipeline
-✔ Reports 94.41% test accuracy in the notebook
-✔ Reports approximately 94% fraud recall
-✔ Includes confusion matrix evaluation
-✔ Saves the trained model with Joblib
-✔ Includes a Streamlit prediction application
-```
+🚀 This project provides a practical foundation for experimenting with advanced machine learning algorithms, feature engineering, class-imbalance techniques, threshold optimization, and production-oriented fraud detection systems.
 
 ---
 
@@ -857,32 +774,12 @@ Contains files and directories excluded from Git tracking.
 
 **Rajesh Kumar**
 
-Computer Science Engineering Graduate | Aspiring Data Scientist / Data Analyst
+🎓 Computer Science and Engineering Graduate
 
-### Technical Interests
-
-* Data Science
-* Machine Learning
-* Data Analytics
-* Python
-* SQL
-* Power BI
-* Artificial Intelligence
+🐙 GitHub: **Rajeshkumar0707**
 
 ---
 
-## ⭐ Conclusion
+## 📜 License
 
-This project demonstrates a machine learning workflow for financial transaction fraud classification using the PaySim dataset downloaded from Kaggle.
-
-The repository includes the notebook, trained model, Streamlit application, screenshots, and project documentation. The original dataset is not uploaded because it is larger than 400 MB and must be downloaded separately from Kaggle.
-
-The current implementation uses Logistic Regression with class weighting, preprocessing through a Scikit-learn pipeline, and a Streamlit interface for prediction.
-
-The notebook reports high overall accuracy and fraud recall, but fraud precision is low. Therefore, the current model should be understood as a baseline educational project rather than a production fraud detection system.
-
----
-
-## 📄 License
-
-This project is intended for educational, learning, and portfolio purposes.
+This project is intended for **educational, portfolio, and demonstration purposes**.
